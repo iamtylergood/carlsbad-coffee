@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon - Carlsbad Coffee Co.</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(rgba(26, 26, 26, 0.9), rgba(26, 26, 26, 0.9)), 
+                        url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            text-align: center;
+            background: rgba(26, 26, 26, 0.95);
+            padding: 3rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero-image {
+            width: 100%;
+            max-width: 400px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #cccccc;
+            font-style: italic;
+        }
+        
+        .coming-soon {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: #8B4513;
+        }
+        
+        .location {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+        
+        .description {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            color: #cccccc;
+        }
+        
+        .waitlist-section {
+            background: rgba(139, 69, 19, 0.2);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(139, 69, 19, 0.3);
+        }
+        
+        .waitlist-title {
+            font-size: 1.5rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+        
+        .waitlist-description {
+            color: #cccccc;
+            margin-bottom: 1.5rem;
+        }
+        
+        .email-form {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .email-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem;
+            border: 2px solid #8B4513;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+        }
+        
+        .email-input::placeholder {
+            color: #888888;
+        }
+        
+        .email-input:focus {
+            outline: none;
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .submit-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #A0522D, #CD853F);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
+        }
+        
+        .submit-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .message.success {
+            background: rgba(34, 139, 34, 0.3);
+            border: 1px solid #228B22;
+            color: #90EE90;
+        }
+        
+        .message.error {
+            background: rgba(220, 20, 60, 0.3);
+            border: 1px solid #DC143C;
+            color: #FFB6C1;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .image-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .image-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .image-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.5rem;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+        
+        .features {
+            margin-bottom: 2rem;
+            text-align: left;
+            display: inline-block;
+        }
+        
+        .features h3 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .features ul {
+            list-style: none;
+        }
+        
+        .features li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+        }
+        
+        .features li:before {
+            content: "☕ ";
+            color: #8B4513;
+        }
+        
+        .contact {
+            font-size: 0.9rem;
+            color: #888888;
+            border-top: 1px solid #333;
+            padding-top: 1rem;
+        }
+        
+        .blink {
+            animation: blink 2s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .coming-soon {
+                font-size: 2.5rem;
+            }
+            
+            .email-form {
+                flex-direction: column;
+            }
+            
+            .email-input {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+             alt="Artisanal coffee beans" class="hero-image">
+        
+        <div class="logo">CARLSBAD COFFEE CO.</div>
+        <div class="tagline">Where the Pacific meets your perfect cup</div>
+        
+        <div class="coming-soon">COMING SOON</div>
+        
+        <div class="location">Carlsbad, California</div>
+        
+        <div class="description">
+            We're crafting something special in the heart of Carlsbad. 
+            A place where community meets quality, where every sip tells a story.
+        </div>
+        
+        <div class="waitlist-section">
+            <div class="waitlist-title">🎉 Join Our Grand Opening Waitlist!</div>
+            <div class="waitlist-description">
+                Be the first to know when we open our doors. Get exclusive early access, 
+                special offers, and behind-the-scenes updates.
+            </div>
+            <form class="email-form" id="waitlistForm">
+                <input type="email" 
+                       class="email-input" 
+                       id="emailInput" 
+                       placeholder="Enter your email address" 
+                       required>
+                <button type="submit" class="submit-btn" id="submitBtn">Join Waitlist</button>
+            </form>
+            <div id="message" class="message" style="display: none;"></div>
+        </div>
+        
+        <div class="image-grid">
+            <div class="image-item">
+                <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                     alt="Coffee brewing">
+                <div class="image-caption">Artisanal Brewing</div>
+            </div>
+            <div class="image-item">
+                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                     alt="Coastal view">
+                <div class="image-caption">Ocean Views</div>
+            </div>
+            <div class="image-item">
+                <img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                     alt="Fresh pastries">
+                <div class="image-caption">Fresh Pastries</div>
+            </div>
+        </div>
+        
+        <div class="features">
+            <h3>What to Expect</h3>
+            <ul>
+                <li>Single-origin beans from local roasters</li>
+                <li>Artisanal pastries made fresh daily</li>
+                <li>Ocean-view seating with coastal vibes</li>
+                <li>Community gathering space</li>
+                <li>Local art and live music</li>
+                <li>Sustainable practices and eco-friendly packaging</li>
+            </ul>
+        </div>
+        
+        <div class="contact">
+            <p>Follow our journey @carlsbadcoffeeco</p>
+            <p>Opening Spring 2024 <span class="blink">|</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Replace this URL with your Google Apps Script web app URL after deployment
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwYscN9DxSyVzp8gO-eRJ_UerflvM2nFhqCMq7lPes5nrMxm_gd9K0fBVREOI7i8baf/exec';
+        
+        document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('emailInput').value;
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('message');
+            
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMessage('Please enter a valid email address.', 'error');
+                return;
+            }
+            
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Joining...';
+            
+            // Send to Google Apps Script
+            console.log('Sending email to:', GOOGLE_SCRIPT_URL);
+            console.log('Email data:', { email: email });
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                if (data.success) {
+                    showMessage('🎉 Welcome to the waitlist! We\'ll be in touch soon with exclusive updates.', 'success');
+                    document.getElementById('emailInput').value = '';
+                } else {
+                    showMessage(data.message || 'Something went wrong. Please try again.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                showMessage('Network error. Please check your connection and try again.', 'error');
+            })
+            .finally(() => {
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Join Waitlist';
+            });
+        });
+        
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Test if Google Apps Script is accessible
+        window.addEventListener('load', function() {
+            if (GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+                fetch(GOOGLE_SCRIPT_URL, { method: 'GET' })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log('Google Apps Script is running:', data);
+                    })
+                    .catch(error => {
+                        console.error('Google Apps Script not accessible:', error);
+                        showMessage('⚠️ Waitlist system is being set up. Please try again later.', 'error');
+                    });
+            }
+        });
+    </script>
+</body>
+</html> 
